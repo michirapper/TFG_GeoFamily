@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "34879010120",
+    "project_id": "tfg-geofamily",
+    "storage_bucket": "tfg-geofamily.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34879010120:android:65eaa1555e8517a432af7d",
+        "android_client_info": {
+          "package_name": "com.example.tfg_geofamily"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "34879010120-kg4heq7ulhocfkfuat1207t7t23qelbm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqC6SvzwJcIUmf-SrzApZ5BISUCX_bK6o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "34879010120-kg4heq7ulhocfkfuat1207t7t23qelbm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
