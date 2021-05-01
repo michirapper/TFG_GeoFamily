@@ -46,26 +46,11 @@ class RegisterFragment : Fragment() {
         var password = binding.password.text.toString()
         var confirmPassword = binding.ConfirmPassword.text.toString()
         when {
-            TextUtils.isEmpty(email) -> Toast.makeText(
-                    context,
-                    "El email es obligatorio",
-                    Toast.LENGTH_SHORT
-            ).show()
-            TextUtils.isEmpty(password) -> Toast.makeText(
-                    context,
-                    "La contraseña es obligatoria",
-                    Toast.LENGTH_SHORT
-            ).show()
-            TextUtils.isEmpty(confirmPassword) -> Toast.makeText(
-                    context,
-                    "Tiene que confirmar la contraseña",
-                    Toast.LENGTH_SHORT
-            ).show()
-            !TextUtils.equals(password, confirmPassword) -> Toast.makeText(
-                    context,
-                    "La contraseña tiene que coincidir",
-                    Toast.LENGTH_SHORT
-            ).show()
+            TextUtils.isEmpty(email) -> Toast.makeText(context,"El email es obligatorio",Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(password) -> Toast.makeText(context,"La contraseña es obligatoria",Toast.LENGTH_SHORT).show()
+            TextUtils.isEmpty(confirmPassword) -> Toast.makeText(context,"Tiene que confirmar la contraseña",Toast.LENGTH_SHORT).show()
+            !TextUtils.equals(password, confirmPassword) -> Toast.makeText(context,"La contraseña tiene que coincidir",Toast.LENGTH_SHORT).show()
+
             else -> {
                 var progressDialog = ProgressDialog(context)
                 progressDialog.setTitle("SignUp")
@@ -104,7 +89,7 @@ class RegisterFragment : Fragment() {
                 progressDialog.dismiss()
                 Toast.makeText(context, "Account has been created successfully.", Toast.LENGTH_SHORT).show()
 
-                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_homeMapFragment)
 
             }else{
                 var messeage = task.exception!!.toString()
