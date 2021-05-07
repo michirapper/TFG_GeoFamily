@@ -60,7 +60,9 @@ class RegisterFragment : Fragment() {
                 val mAuth : FirebaseAuth = FirebaseAuth.getInstance()
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{ task ->
                     if(task.isSuccessful){
-                        saveUserInfo(email, password, progressDialog)
+                        progressDialog.dismiss()
+                        Toast.makeText(context, "Account has been created successfully.", Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_registerFragment_to_homeMapFragment)
                     }else{
                         val messeage = task.exception!!.toString()
                         Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
@@ -73,35 +75,35 @@ class RegisterFragment : Fragment() {
 
     }
 
-    private fun saveUserInfo(email: String, password: String, progressDialog: ProgressDialog) {
-        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-        val userRef : DatabaseReference = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference.child("Users")
-
-        val userMap = HashMap<String, Any>()
-        userMap["uid"] = currentUserID
-        userMap["email"] = email
-        userMap["password"] = password
-
-
-
-        userRef.child(currentUserID).setValue(userMap).addOnCompleteListener { task ->
-            if(task.isSuccessful){
-                progressDialog.dismiss()
-                Toast.makeText(context, "Account has been created successfully.", Toast.LENGTH_SHORT).show()
-
-                findNavController().navigate(R.id.action_registerFragment_to_homeMapFragment)
-
-            }else{
-                var messeage = task.exception!!.toString()
-                Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
-                FirebaseAuth.getInstance().signOut()
-                progressDialog.dismiss()
-            }
-        }.addOnFailureListener{
-            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-        }
-
-    }
+//    private fun saveUserInfo(email: String, password: String, progressDialog: ProgressDialog) {
+//        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+//        val userRef : DatabaseReference = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference.child("Users")
+//
+//        val userMap = HashMap<String, Any>()
+//        userMap["uid"] = currentUserID
+//        userMap["email"] = email
+//        userMap["password"] = password
+//
+//
+//
+//        userRef.child(currentUserID).setValue(userMap).addOnCompleteListener { task ->
+//            if(task.isSuccessful){
+//                progressDialog.dismiss()
+//                Toast.makeText(context, "Account has been created successfully.", Toast.LENGTH_SHORT).show()
+//
+//                findNavController().navigate(R.id.action_registerFragment_to_homeMapFragment)
+//
+//            }else{
+//                var messeage = task.exception!!.toString()
+//                Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
+//                FirebaseAuth.getInstance().signOut()
+//                progressDialog.dismiss()
+//            }
+//        }.addOnFailureListener{
+//            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+//        }
+//
+//    }
 
 
 //    private fun saveUserInfo() {
