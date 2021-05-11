@@ -43,14 +43,6 @@ class ListFragment : Fragment() {
 
     private fun listaFamiliares(familyGroup: MutableList<Familiares>) {
 
-        //rellenarlo con un array de los RealTimeDatabase
-
-        var dummyList = mutableListOf<Familiares>()
-        dummyList.add(Familiares(0.0, 0.0, "15665165", "michirapper@gmail.com"))
-        dummyList.add(Familiares(0.0, 0.0, "15665165", "michirapper2@gmail.com"))
-
-        var familiar = dummyList
-
         var viewModel = ViewModelProvider(requireActivity()).get(FamiliaresViewModel::class.java)
 
         Log.e("Users", familyGroup.size.toString())

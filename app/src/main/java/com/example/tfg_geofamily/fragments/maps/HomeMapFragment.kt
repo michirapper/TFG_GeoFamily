@@ -1,6 +1,7 @@
 package com.example.tfg_geofamily.fragments.maps
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.location.Location
@@ -119,7 +120,8 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                         latLang["longitud"] = location.longitude
                         latLang["UID"] = currentUserID
                         latLang["email"] = currentUserEmail
-                        mDatabase.child("usuarios").child(currentUserID).setValue(latLang)
+                        val userEmail = currentUserEmail.split("@").toTypedArray()
+                        mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
                     } else {
                         Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
                     }
@@ -172,6 +174,8 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
 
     private fun firestore() {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.uid
+        val userEmail = currentUserEmail.split("@").toTypedArray()
         val db = FirebaseFirestore.getInstance()
         db.collection("users").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
