@@ -3,9 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/VerTodo"
-        android:title="Ver a todos"/>
-    <item
         android:id="@+id/VerFamiliares"
         android:title="Familiares"/>
     <item

@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentHomeMapBinding
@@ -144,12 +146,12 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                     )
                     //Ir comparando si esta en el grupo del Usuario
                     // Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
-                    Toast.makeText(context, familyGroup.size.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, familyGroup.size.toString(), Toast.LENGTH_SHORT).show()
                     val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                     for (person in familyGroup) {
                         // Log.d("Users", person)
                         if (email == person) {
-                            Log.d("Users", person)
+                            //Log.d("Users", person)
                             tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
                         }
                     }
@@ -204,10 +206,6 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
             R.id.CerrarSesion -> {
                 FirebaseAuth.getInstance().signOut()
                 findNavController().navigate(R.id.action_homeMapFragment_to_loginFragment)
-                true
-            }
-            R.id.VerTodo -> {
-                firestore()
                 true
             }
             R.id.VerFamiliares -> {

@@ -12,11 +12,14 @@ import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.fragments.model.Familiares
 import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
 
-class FamiliarAdapter(var familiares: List<Familiares>, var familiaresViewModel: FamiliaresViewModel): RecyclerView.Adapter<FamiliarAdapter.ViewHolder>(), Filterable {
+class FamiliarAdapter(
+    var familiares: List<Familiares>,
+    var familiaresViewModel: FamiliaresViewModel
+) : RecyclerView.Adapter<FamiliarAdapter.ViewHolder>(), Filterable {
 
     var FilterList = ArrayList<Familiares>()
 
-    init{
+    init {
         FilterList = familiares as ArrayList<Familiares>
     }
 
@@ -50,35 +53,36 @@ class FamiliarAdapter(var familiares: List<Familiares>, var familiaresViewModel:
 
         fun bindItems(familiares: Familiares) {
             val textViewNombre = itemView.findViewById<TextView>(R.id.textViewTitulo)
+//            Log.e("familiar",familiares.email.toString())
+//            Log.e("familiar","hola")
             textViewNombre.text = familiares.email
         }
     }
 
     override fun getFilter(): Filter {
-       return object :Filter(){
-           override fun performFiltering(constraint: CharSequence?): FilterResults {
-               val charSequence = constraint.toString()
-               if (charSequence.isEmpty()){
-                   FilterList = familiares as ArrayList<Familiares>
-               }
-               else{
-                   val resultList = ArrayList<Familiares>()
-                   for (row in familiares){
-                       if (row.email?.toLowerCase()?.contains(charSequence.toLowerCase())!!){
-                           resultList.add(row)
-                       }
-                   }
-                   FilterList = resultList
-               }
-               var filterResult = FilterResults()
-               filterResult.values = FilterList
-               return filterResult
-           }
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSequence = constraint.toString()
+                if (charSequence.isEmpty()) {
+                    FilterList = familiares as ArrayList<Familiares>
+                } else {
+                    val resultList = ArrayList<Familiares>()
+                    for (row in familiares) {
+                        if (row.email?.toLowerCase()?.contains(charSequence.toLowerCase())!!) {
+                            resultList.add(row)
+                        }
+                    }
+                    FilterList = resultList
+                }
+                var filterResult = FilterResults()
+                filterResult.values = FilterList
+                return filterResult
+            }
 
-           override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-               FilterList = results?.values as ArrayList<Familiares>
-               notifyDataSetChanged()
-           }
-       }
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                FilterList = results?.values as ArrayList<Familiares>
+                notifyDataSetChanged()
+            }
+        }
     }
 }
