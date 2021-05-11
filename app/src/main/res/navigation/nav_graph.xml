@@ -37,5 +37,13 @@
         <action
             android:id="@+id/action_homeMapFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_homeMapFragment_to_listFragment"
+            app:destination="@id/listFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.example.tfg_geofamily.fragments.maps.ListFragment"
+        android:label="fragment_list"
+        tools:layout="@layout/fragment_list" />
 </navigation>

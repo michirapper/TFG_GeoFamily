@@ -6,6 +6,12 @@
         android:id="@+id/VerTodo"
         android:title="Ver a todos"/>
     <item
+        android:id="@+id/VerFamiliares"
+        android:title="Familiares"/>
+    <item
+        android:id="@+id/AddFamily"
+        android:title="Añadir familiar"/>
+    <item
         android:id="@+id/CerrarSesion"
         android:title="Cerrar Sesion"/>
     <!--        app:showAsAction="ifRoom|withText" -->

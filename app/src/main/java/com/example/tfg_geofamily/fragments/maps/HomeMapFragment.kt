@@ -105,12 +105,12 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location: Location? ->
                     if (location != null) {
-                       // firestore()
+                        // firestore()
                         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                         val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
                         Log.e(
                             "LatLong",
-                            "Latitud:" + location.latitude + " - " + "Longitud:" + location.longitude + " - UID" + currentUserEmail.toString()
+                            "Latitud:" + location.latitude + " - " + "Longitud:" + location.longitude + " - email: " + currentUserEmail.toString()
                         )
                         val latLang = HashMap<String, Any>()
                         latLang["latitud"] = location.latitude
@@ -144,12 +144,13 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                     )
                     //Ir comparando si esta en el grupo del Usuario
                     // Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
-                   Toast.makeText(context, familyGroup.size.toString(), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, familyGroup.size.toString(), Toast.LENGTH_SHORT).show()
+                    val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                     for (person in familyGroup) {
-                       // Log.d("Users", person)
+                        // Log.d("Users", person)
                         if (email == person) {
-                            //Log.d("Users", "true")
-                            tmpRealTimeMarkers.add(mMap.addMarker(markerOptions))
+                            Log.d("Users", person)
+                            tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
                         }
                     }
 
@@ -167,7 +168,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-    fun firestore() {
+    private fun firestore() {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val db = FirebaseFirestore.getInstance()
         db.collection("users").get().addOnCompleteListener { task ->
@@ -207,6 +208,10 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
             }
             R.id.VerTodo -> {
                 firestore()
+                true
+            }
+            R.id.VerFamiliares -> {
+                findNavController().navigate(R.id.action_homeMapFragment_to_listFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

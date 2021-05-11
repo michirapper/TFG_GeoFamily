@@ -13,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
