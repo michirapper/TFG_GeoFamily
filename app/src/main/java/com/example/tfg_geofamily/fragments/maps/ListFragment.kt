@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tfg_geofamily.R
-import com.example.tfg_geofamily.databinding.FragmentHomeMapBinding
 import com.example.tfg_geofamily.databinding.FragmentListBinding
 import com.example.tfg_geofamily.fragments.adapters.FamiliarAdapter
 import com.example.tfg_geofamily.fragments.model.Familiares
@@ -29,7 +28,11 @@ class ListFragment : Fragment() {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setHasOptionsMenu(true)
         // Inflate the layout for this fragment
         binding = FragmentListBinding.inflate(inflater, container, false)
@@ -79,6 +82,7 @@ class ListFragment : Fragment() {
         }
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.list_menu, menu)
         var menuItemSearch = menu.findItem(R.id.app_bar_search)
@@ -87,7 +91,7 @@ class ListFragment : Fragment() {
         var searchView = menuItemSearch.actionView as SearchView
         searchView.queryHint = "Buscar familiar"
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }

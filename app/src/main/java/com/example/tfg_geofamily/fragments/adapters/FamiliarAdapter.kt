@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tfg_geofamily.R
+import com.example.tfg_geofamily.fragments.maps.ListFragmentDirections
 import com.example.tfg_geofamily.fragments.model.Familiares
 import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
 
@@ -37,8 +39,8 @@ class FamiliarAdapter(
             familiaresViewModel.setFamiliarSeleccionada(FilterList[position])
             Log.e("familiar", FilterList[position].email.toString())
 
-//            val action = ListFragmentDirections.actionListFragmentToFichaFragment()
-//            it.findNavController().navigate(action)
+            val action = ListFragmentDirections.actionListFragmentToMapResultFragment()
+            it.findNavController().navigate(action)
 
         }
     }

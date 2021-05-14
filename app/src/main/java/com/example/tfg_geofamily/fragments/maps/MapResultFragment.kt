@@ -1,22 +1,87 @@
 package com.example.tfg_geofamily.fragments.maps
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.tfg_geofamily.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.example.tfg_geofamily.databinding.FragmentMapResultBinding
+import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 
-class MapResultFragment : Fragment() {
+class MapResultFragment : Fragment(), OnMapReadyCallback {
+
+    private lateinit var binding: FragmentMapResultBinding
+    private lateinit var mMap: GoogleMap
+    lateinit var mDatabase: DatabaseReference
+    lateinit var familiar: String
+    private var tmpRealTimeMarkers: ArrayList<Marker> = arrayListOf()
+    private var realTimeMarkers: ArrayList<Marker> = arrayListOf()
+    private var familyGroup: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        realTimeMarkers.clear()
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_map_result, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        binding = FragmentMapResultBinding.inflate(inflater, container, false)
+        binding.mapView.onCreate(savedInstanceState)
+        binding.mapView.onResume()
+        binding.mapView.getMapAsync(this)
+        mDatabase =
+            FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+
+        var viewModel = ViewModelProvider(requireActivity()).get(FamiliaresViewModel::class.java)
+        familiar = viewModel.getFamiliarSeleccionada().email.toString()
+
+
+        return binding.root
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        mMap = map
+
+        val userEmail = familiar.split("@").toTypedArray()
+
+        mDatabase.child("usuarios").child(userEmail[0])
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    //firestore()
+
+                    var mp = snapshot.getValue(MapsPojo::class.java)
+                    var latitud: Double = mp!!.latitud
+                    var longitud: Double = mp!!.longitud
+                    var uid: String = mp!!.UID
+                    var email: String = mp!!.email
+                    var markerOptions: MarkerOptions =
+                        MarkerOptions().title(email).position(LatLng(latitud, longitud))
+                    tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
+                    realTimeMarkers.clear()
+                    realTimeMarkers.addAll(tmpRealTimeMarkers)
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
     }
 
     companion object {
@@ -24,4 +89,6 @@ class MapResultFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             MapResultFragment().apply {}
     }
+
+
 }

@@ -18,13 +18,15 @@ internal object SharedPreferenceUtil {
 
     fun getLocationTrackingPref(context: Context): Boolean =
         context.getSharedPreferences(
-            context.getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+            context.getString(R.string.preference_file_key), Context.MODE_PRIVATE
+        )
             .getBoolean(KEY_FOREGROUND_ENABLED, false)
 
     fun saveLocationTrackingPref(context: Context, requestingLocationUpdates: Boolean) =
         context.getSharedPreferences(
             context.getString(R.string.preference_file_key),
-            Context.MODE_PRIVATE).edit {
-                putBoolean(KEY_FOREGROUND_ENABLED, requestingLocationUpdates)
-            }
+            Context.MODE_PRIVATE
+        ).edit {
+            putBoolean(KEY_FOREGROUND_ENABLED, requestingLocationUpdates)
+        }
 }

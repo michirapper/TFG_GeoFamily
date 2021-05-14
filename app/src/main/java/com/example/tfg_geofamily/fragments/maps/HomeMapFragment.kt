@@ -1,25 +1,16 @@
 package com.example.tfg_geofamily.fragments.maps
 
-import android.Manifest
-import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentHomeMapBinding
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -35,9 +26,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var binding: FragmentHomeMapBinding
     private lateinit var mMap: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     lateinit var mDatabase: DatabaseReference
-    private val REQUEST_PERMISSION_REQUEST_CODE = 2020
     private var tmpRealTimeMarkers: ArrayList<Marker> = arrayListOf()
     private var realTimeMarkers: ArrayList<Marker> = arrayListOf()
     private var familyGroup: ArrayList<String> = arrayListOf()

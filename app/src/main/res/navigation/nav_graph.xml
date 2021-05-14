@@ -45,5 +45,14 @@
         android:id="@+id/listFragment"
         android:name="com.example.tfg_geofamily.fragments.maps.ListFragment"
         android:label="fragment_list"
-        tools:layout="@layout/fragment_list" />
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_listFragment_to_mapResultFragment"
+            app:destination="@id/mapResultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapResultFragment"
+        android:name="com.example.tfg_geofamily.fragments.maps.MapResultFragment"
+        android:label="fragment_map_result"
+        tools:layout="@layout/fragment_map_result" />
 </navigation>
