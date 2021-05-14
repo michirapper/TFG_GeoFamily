@@ -83,47 +83,6 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
-    private fun subirLatLongFirebase() {
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-        if (ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION),
-                REQUEST_PERMISSION_REQUEST_CODE
-            )
-            return
-        } else {
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                    if (location != null) {
-                        // firestore()
-                        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-                        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
-                        Log.e(
-                            "LatLong",
-                            "Latitud:" + location.latitude + " - " + "Longitud:" + location.longitude + " - email: " + currentUserEmail.toString()
-                        )
-                        val latLang = HashMap<String, Any>()
-                        latLang["latitud"] = location.latitude
-                        latLang["longitud"] = location.longitude
-                        latLang["UID"] = currentUserID
-                        latLang["email"] = currentUserEmail
-                        val userEmail = currentUserEmail.split("@").toTypedArray()
-                        mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
-                    } else {
-                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
-        }
-    }
-
     override fun onMapReady(map: GoogleMap) {
         mMap = map
         mDatabase.child("usuarios").addValueEventListener(object : ValueEventListener {
@@ -138,7 +97,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                     var longitud: Double = mp!!.longitud
                     var uid: String = mp!!.UID
                     var email: String = mp!!.email
-                    var markerOptions: MarkerOptions = MarkerOptions().position(
+                    var markerOptions: MarkerOptions = MarkerOptions().title(email).position(
                         LatLng(latitud, longitud)
                     )
                     //Ir comparando si esta en el grupo del Usuario
