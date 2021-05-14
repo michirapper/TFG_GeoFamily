@@ -76,12 +76,8 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.onResume()
         binding.mapView.getMapAsync(this)
-
-        mDatabase =
-            FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
-
-
-        subirLatLongFirebase()
+        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+        //subirLatLongFirebase()
         //firestore()
 
         return binding.root
@@ -105,8 +101,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
             )
             return
         } else {
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location: Location? ->
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                     if (location != null) {
                         // firestore()
                         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
