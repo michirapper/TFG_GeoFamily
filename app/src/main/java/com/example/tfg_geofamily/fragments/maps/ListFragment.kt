@@ -28,13 +28,9 @@ class ListFragment : Fragment() {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         setHasOptionsMenu(true)
-        // Inflate the layout for this fragment
+
         binding = FragmentListBinding.inflate(inflater, container, false)
 
         recyclerviewlista = binding.recyclerviewlista
@@ -65,10 +61,8 @@ class ListFragment : Fragment() {
             if (task.isSuccessful) {
                 for (document in task.result) {
                     if (document.id == currentUserID) {
-                        //Log.d("Users", document.id + " => " + document.data)
                         for ((k, v) in document.data) {
                             if (v.toString() != currentEmailID) {
-                                //Log.d("Users", "$v")
                                 familyGroup.add(Familiares(0.0, 0.0, "", v.toString()))
                             }
                         }

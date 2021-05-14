@@ -25,7 +25,6 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
     lateinit var familiar: String
     private var tmpRealTimeMarkers: ArrayList<Marker> = arrayListOf()
     private var realTimeMarkers: ArrayList<Marker> = arrayListOf()
-    private var familyGroup: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +32,7 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
 
         binding = FragmentMapResultBinding.inflate(inflater, container, false)
         binding.mapView.onCreate(savedInstanceState)
@@ -61,7 +56,6 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
         mDatabase.child("usuarios").child(userEmail[0])
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    //firestore()
 
                     var mp = snapshot.getValue(MapsPojo::class.java)
                     var latitud: Double = mp!!.latitud

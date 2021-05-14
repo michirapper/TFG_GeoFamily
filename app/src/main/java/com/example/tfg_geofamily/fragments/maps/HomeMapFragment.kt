@@ -56,18 +56,12 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = FragmentHomeMapBinding.inflate(inflater, container, false)
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.onResume()
         binding.mapView.getMapAsync(this)
         mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
-        //subirLatLongFirebase()
-        //firestore()
 
         return binding.root
     }
@@ -89,14 +83,10 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                     var markerOptions: MarkerOptions = MarkerOptions().title(email).position(
                         LatLng(latitud, longitud)
                     )
-                    //Ir comparando si esta en el grupo del Usuario
-                    // Toast.makeText(context, email, Toast.LENGTH_SHORT).show()
-                    //Toast.makeText(context, familyGroup.size.toString(), Toast.LENGTH_SHORT).show()
+
                     val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                     for (person in familyGroup) {
-                        // Log.d("Users", person)
                         if (email == person) {
-                            //Log.d("Users", person)
                             tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
                         }
                     }
@@ -133,7 +123,6 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                     }
 
                 }
-                //Toast.makeText(context, familyGroup.size.toString(), Toast.LENGTH_SHORT).show()
 
             } else {
                 Log.w("Users", "Error getting documents.", task.exception)

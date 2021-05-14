@@ -24,35 +24,43 @@ class LoginFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
-        binding.signUp.setOnClickListener{
+        binding.signUp.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-        binding.login.setOnClickListener{
+        binding.login.setOnClickListener {
             var email = binding.email.text.toString()
             var password = binding.password.text.toString()
-            when{
-                TextUtils.isEmpty(email) -> Toast.makeText(context,"El email es obligatorio", Toast.LENGTH_SHORT).show()
-                TextUtils.isEmpty(password) -> Toast.makeText(context,"La contraseña es obligatoria", Toast.LENGTH_SHORT).show()
-             else ->{
-                 var progressDialog = ProgressDialog(context)
-                 progressDialog.setTitle("Login")
-                 progressDialog.setMessage("Por favor espera, esto puede tomar unos minutos...")
-                 progressDialog.setCanceledOnTouchOutside(false)
-                 progressDialog.show()
-                 val mAuth : FirebaseAuth = FirebaseAuth.getInstance()
+            when {
+                TextUtils.isEmpty(email) -> Toast.makeText(
+                    context,
+                    "El email es obligatorio",
+                    Toast.LENGTH_SHORT
+                ).show()
+                TextUtils.isEmpty(password) -> Toast.makeText(
+                    context,
+                    "La contraseña es obligatoria",
+                    Toast.LENGTH_SHORT
+                ).show()
+                else -> {
+                    var progressDialog = ProgressDialog(context)
+                    progressDialog.setTitle("Login")
+                    progressDialog.setMessage("Por favor espera, esto puede tomar unos minutos...")
+                    progressDialog.setCanceledOnTouchOutside(false)
+                    progressDialog.show()
+                    val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener{
-                     if (it.isSuccessful){
-                         progressDialog.dismiss()
-                         findNavController().navigate(R.id.action_loginFragment_to_homeMapFragment)
-                     }else{
-                         var messeage = it.exception!!.toString()
-                         Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
-                         FirebaseAuth.getInstance().signOut()
-                         progressDialog.dismiss()
-                     }
-                 }
-             }
+                    mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            progressDialog.dismiss()
+                            findNavController().navigate(R.id.action_loginFragment_to_homeMapFragment)
+                        } else {
+                            var messeage = it.exception!!.toString()
+                            Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
+                            FirebaseAuth.getInstance().signOut()
+                            progressDialog.dismiss()
+                        }
+                    }
+                }
             }
 
 
@@ -63,7 +71,7 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if(FirebaseAuth.getInstance().currentUser != null){
+        if (FirebaseAuth.getInstance().currentUser != null) {
             findNavController().navigate(R.id.action_loginFragment_to_homeMapFragment)
         }
     }
