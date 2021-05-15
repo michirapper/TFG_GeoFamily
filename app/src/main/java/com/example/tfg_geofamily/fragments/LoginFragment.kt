@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
         val currentUser = mAuth.currentUser
         if (currentUser != null) {
             findNavController().navigate(R.id.action_loginFragment2_to_drawerActivity)
-            Toast.makeText(context, currentUser.email.toString(), Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, currentUser.email.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

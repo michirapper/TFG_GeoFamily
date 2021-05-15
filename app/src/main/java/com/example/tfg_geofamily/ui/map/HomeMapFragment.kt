@@ -72,6 +72,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(map: GoogleMap) {
         mMap = map
+
         mDatabase.child("usuarios").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //firestore()

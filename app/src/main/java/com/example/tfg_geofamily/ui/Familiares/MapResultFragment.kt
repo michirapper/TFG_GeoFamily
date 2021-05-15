@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.tfg_geofamily.databinding.FragmentMapResultBinding
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.*
+import java.lang.Exception
 
 class MapResultFragment : Fragment(), OnMapReadyCallback {
 
@@ -31,7 +33,11 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         binding = FragmentMapResultBinding.inflate(inflater, container, false)
         binding.mapView.onCreate(savedInstanceState)
@@ -52,25 +58,38 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
 
         val userEmail = familiar.split("@").toTypedArray()
 
+
         mDatabase.child("usuarios").child(userEmail[0])
             .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
 
-                    var mp = snapshot.getValue(MapsPojo::class.java)
-                    var latitud: Double = mp!!.latitud
-                    var longitud: Double = mp!!.longitud
-                    var uid: String = mp!!.UID
-                    var email: String = mp!!.email
-                    var markerOptions: MarkerOptions =
-                        MarkerOptions().title(email).position(LatLng(latitud, longitud))
-                    tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
-                    realTimeMarkers.clear()
-                    realTimeMarkers.addAll(tmpRealTimeMarkers)
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try {
+                        var mp = snapshot.getValue(MapsPojo::class.java)
+                        var latitud: Double = mp!!.latitud
+                        var longitud: Double = mp!!.longitud
+                        var uid: String = mp!!.UID
+                        var email: String = mp!!.email
+                        var markerOptions: MarkerOptions =
+                            MarkerOptions().title(email).position(LatLng(latitud, longitud))
+                        tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
+                        realTimeMarkers.clear()
+                        realTimeMarkers.addAll(tmpRealTimeMarkers)
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            context,
+                            "No hay datos sobre este usuario",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
 
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
+                    Toast.makeText(
+                        context,
+                        "No hay datos sobre este usuario",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
             })
