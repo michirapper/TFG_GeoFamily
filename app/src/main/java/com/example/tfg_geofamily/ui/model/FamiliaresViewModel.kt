@@ -1,6 +1,7 @@
 package com.example.tfg_geofamily.fragments.model
 
 import androidx.lifecycle.ViewModel
+import com.example.tfg_geofamily.ui.model.Familiares
 
 
 class FamiliaresViewModel : ViewModel() {

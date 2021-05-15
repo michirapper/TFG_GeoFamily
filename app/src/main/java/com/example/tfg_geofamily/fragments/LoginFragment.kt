@@ -1,4 +1,4 @@
-package com.example.tfg_geofamily.fragments.login
+package com.example.tfg_geofamily.fragments
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -25,7 +25,7 @@ class LoginFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.signUp.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+            findNavController().navigate(R.id.action_loginFragment2_to_registerFragment2)
         }
         binding.login.setOnClickListener {
             var email = binding.email.text.toString()
@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
                             progressDialog.dismiss()
-                            findNavController().navigate(R.id.action_loginFragment_to_homeMapFragment)
+                            findNavController().navigate(R.id.action_loginFragment2_to_drawerActivity)
                         } else {
                             var messeage = it.exception!!.toString()
                             Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
@@ -72,7 +72,7 @@ class LoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         if (FirebaseAuth.getInstance().currentUser != null) {
-            findNavController().navigate(R.id.action_loginFragment_to_homeMapFragment)
+            findNavController().navigate(R.id.action_loginFragment2_to_drawerActivity)
         }
     }
 

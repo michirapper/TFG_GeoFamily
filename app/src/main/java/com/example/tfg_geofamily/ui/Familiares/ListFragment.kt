@@ -1,4 +1,4 @@
-package com.example.tfg_geofamily.fragments.maps
+package com.example.tfg_geofamily.ui.Familiares
 
 import android.os.Bundle
 import android.util.Log
@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentListBinding
-import com.example.tfg_geofamily.fragments.adapters.FamiliarAdapter
-import com.example.tfg_geofamily.fragments.model.Familiares
 import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
+import com.example.tfg_geofamily.ui.Familiares.adapters.FamiliarAdapter
+import com.example.tfg_geofamily.ui.model.Familiares
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

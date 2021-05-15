@@ -1,4 +1,4 @@
-package com.example.tfg_geofamily.fragments.login
+package com.example.tfg_geofamily.fragments
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -26,7 +26,7 @@ class RegisterFragment : Fragment() {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
 
         binding.login.setOnClickListener {
-            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+            findNavController().navigate(R.id.action_registerFragment2_to_loginFragment2)
         }
         binding.signUp.setOnClickListener {
             createAccount(binding)
@@ -77,7 +77,7 @@ class RegisterFragment : Fragment() {
                                 "Account has been created successfully.",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            findNavController().navigate(R.id.action_registerFragment_to_homeMapFragment)
+                            findNavController().navigate(R.id.action_registerFragment2_to_drawerActivity)
                         } else {
                             val messeage = task.exception!!.toString()
                             Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()

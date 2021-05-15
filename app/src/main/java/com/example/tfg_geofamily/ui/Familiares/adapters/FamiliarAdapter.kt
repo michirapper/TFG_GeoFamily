@@ -1,4 +1,4 @@
-package com.example.tfg_geofamily.fragments.adapters
+package com.example.tfg_geofamily.ui.Familiares.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +10,9 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tfg_geofamily.R
-import com.example.tfg_geofamily.fragments.maps.ListFragmentDirections
-import com.example.tfg_geofamily.fragments.model.Familiares
 import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
+import com.example.tfg_geofamily.ui.Familiares.ListFragmentDirections
+import com.example.tfg_geofamily.ui.model.Familiares
 
 class FamiliarAdapter(
     var familiares: List<Familiares>,
@@ -37,7 +37,7 @@ class FamiliarAdapter(
             familiaresViewModel.setFamiliarSeleccionada(FilterList[position])
             Log.e("familiar", FilterList[position].email.toString())
 
-            val action = ListFragmentDirections.actionListFragmentToMapResultFragment()
+            val action = ListFragmentDirections.actionListFragment2ToMapResultFragment2()
             it.findNavController().navigate(action)
 
         }

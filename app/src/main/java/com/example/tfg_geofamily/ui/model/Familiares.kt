@@ -1,4 +1,4 @@
-package com.example.tfg_geofamily.fragments.model
+package com.example.tfg_geofamily.ui.model
 
 data class Familiares(
     var latitud: Double = 0.0,

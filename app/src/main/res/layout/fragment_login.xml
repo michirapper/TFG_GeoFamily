@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bc_login_register"
-    tools:context=".fragments.login.LoginFragment">
+    tools:context=".fragments.LoginFragment">
 
     <LinearLayout
         android:id="@+id/linearLayout"

@@ -1,4 +1,4 @@
-package com.example.tfg_geofamily.fragments.maps
+package com.example.tfg_geofamily.pojo
 
 class MapsPojo {
     var latitud = 0.0

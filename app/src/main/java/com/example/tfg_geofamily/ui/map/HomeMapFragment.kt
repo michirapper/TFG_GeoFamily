@@ -1,16 +1,15 @@
-package com.example.tfg_geofamily.fragments.maps
+package com.example.tfg_geofamily.ui.map
 
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentHomeMapBinding
-import com.google.android.gms.location.FusedLocationProviderClient
+import com.example.tfg_geofamily.pojo.MapsPojo
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -36,8 +35,8 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
         realTimeMarkers.clear()
         firestore()
-        setHasOptionsMenu(true)
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+        //setHasOptionsMenu(true)
+        //(activity as AppCompatActivity?)!!.supportActionBar!!.show()
         activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val builder = AlertDialog.Builder(context)
@@ -56,12 +55,17 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentHomeMapBinding.inflate(inflater, container, false)
         binding.mapView.onCreate(savedInstanceState)
         binding.mapView.onResume()
         binding.mapView.getMapAsync(this)
-        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+        mDatabase =
+            FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
         return binding.root
     }
@@ -90,8 +94,6 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                             tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)
                         }
                     }
-
-
                 }
                 realTimeMarkers.clear()
                 realTimeMarkers.addAll(tmpRealTimeMarkers)
@@ -132,25 +134,25 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu, menu)
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.CerrarSesion -> {
-                FirebaseAuth.getInstance().signOut()
-                findNavController().navigate(R.id.action_homeMapFragment_to_loginFragment)
-                true
-            }
-            R.id.VerFamiliares -> {
-                findNavController().navigate(R.id.action_homeMapFragment_to_listFragment)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.CerrarSesion -> {
+//                FirebaseAuth.getInstance().signOut()
+//                findNavController().navigate(R.id.action_homeMapFragment_to_loginFragment)
+//                true
+//            }
+//            R.id.VerFamiliares -> {
+//                findNavController().navigate(R.id.action_homeMapFragment_to_listFragment)
+//                true
+//            }
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
     companion object {
 
