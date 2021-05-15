@@ -30,4 +30,5 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="familiares">Familiares</string>
+    <string name="a_adir_familiar">Añadir familiar</string>
 </resources>

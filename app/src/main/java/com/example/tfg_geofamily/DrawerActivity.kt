@@ -10,17 +10,18 @@ import android.os.IBinder
 import android.provider.Settings
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.example.tfg_geofamily.databinding.ActivityDrawerBinding
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
@@ -70,11 +71,13 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
         setSupportActionBar(binding.appBarDrawer.toolbar)
         setContentView(binding.root)
 
-        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+        mDatabase =
+            FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
         foregroundOnlyBroadcastReceiver = ForegroundOnlyBroadcastReceiver()
 
-        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 
         val enabled = sharedPreferences.getBoolean(
             SharedPreferenceUtil.KEY_FOREGROUND_ENABLED, false
@@ -93,16 +96,31 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
+        val logoutItem = navView.menu.findItem(R.id.nav_mainActivity)
+        logoutItem.setOnMenuItemClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val navController = findNavController(R.id.nav_host_fragment_content_drawer)
+            it.onNavDestinationSelected(navController)
+            true
+        }
+        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
+        val header = navView.getHeaderView(0)
+        val cabecera = header.findViewById<TextView>(R.id.textView)
+        cabecera.text = currentUserEmail
+
         val navController = findNavController(R.id.nav_host_fragment_content_drawer)
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_homeMapFragment2, R.id.nav_listFragment2), drawerLayout
+                R.id.nav_homeMapFragment2, R.id.nav_listFragment2, R.id.nav_addFamiliarFragment
+            ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -237,6 +255,7 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
             }
         }
     }
+
     private fun updateButtonState(trackingLocation: Boolean) {
         if (trackingLocation) {
             Toast.makeText(this, "Geolocation Activated", Toast.LENGTH_SHORT).show()
@@ -283,6 +302,19 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
         menuInflater.inflate(R.menu.drawer, menu)
         return true
     }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.nav_mainActivity -> {
+//                FirebaseAuth.getInstance().signOut()
+//                val navController = findNavController(R.id.nav_host_fragment_content_drawer)
+//                item.onNavDestinationSelected(navController)
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_drawer)

@@ -8,20 +8,30 @@
     <fragment
         android:id="@+id/nav_mapResultFragment2"
         android:name="com.example.tfg_geofamily.ui.Familiares.MapResultFragment"
-        android:label="fragment_map_result"
+        android:label="Resultado"
         tools:layout="@layout/fragment_map_result" />
     <fragment
         android:id="@+id/nav_homeMapFragment2"
         android:name="com.example.tfg_geofamily.ui.map.HomeMapFragment"
-        android:label="fragment_home_map"
+        android:label="Home"
         tools:layout="@layout/fragment_home_map" />
     <fragment
         android:id="@+id/nav_listFragment2"
         android:name="com.example.tfg_geofamily.ui.Familiares.ListFragment"
-        android:label="fragment_list"
+        android:label="Lista Familiares"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment2_to_mapResultFragment2"
             app:destination="@id/nav_mapResultFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_addFamiliarFragment"
+        android:name="com.example.tfg_geofamily.ui.AddFamiliar.AddFamiliarFragment"
+        android:label="Añadir Familiar"
+        tools:layout="@layout/fragment_add_familiar" />
+    <activity
+        android:id="@+id/nav_mainActivity"
+        android:name="com.example.tfg_geofamily.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

@@ -1,5 +1,6 @@
 package com.example.tfg_geofamily.fragments
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,10 +13,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentLoginBinding
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
+    lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
@@ -23,6 +26,7 @@ class LoginFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
+        mAuth = FirebaseAuth.getInstance()
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.signUp.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment2_to_registerFragment2)
@@ -47,7 +51,6 @@ class LoginFragment : Fragment() {
                     progressDialog.setMessage("Por favor espera, esto puede tomar unos minutos...")
                     progressDialog.setCanceledOnTouchOutside(false)
                     progressDialog.show()
-                    val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {
                         if (it.isSuccessful) {
@@ -71,8 +74,10 @@ class LoginFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        if (FirebaseAuth.getInstance().currentUser != null) {
+        val currentUser = mAuth.currentUser
+        if (currentUser != null) {
             findNavController().navigate(R.id.action_loginFragment2_to_drawerActivity)
+            Toast.makeText(context, currentUser.email.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 

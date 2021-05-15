@@ -6,11 +6,23 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_homeMapFragment2"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_listFragment2"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_baseline_supervisor_account_24"
             android:title="@string/familiares" />
+        <item
+            android:id="@+id/nav_addFamiliarFragment"
+            android:icon="@drawable/ic_baseline_person_add_alt_1_24"
+            android:title="@string/a_adir_familiar" />
+
+        <item android:title="Logout">
+            <menu>
+                <item
+                    android:id="@+id/nav_mainActivity"
+                    android:title="Logout" />
+            </menu>
+        </item>
     </group>
 </menu>
