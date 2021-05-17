@@ -13,6 +13,9 @@ import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
 import com.example.tfg_geofamily.ui.Familiares.ListFragmentDirections
 import com.example.tfg_geofamily.ui.model.Familiares
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FieldValue
 
 class FamiliarAdapter(
     var familiares: List<Familiares>,
@@ -51,11 +54,32 @@ class FamiliarAdapter(
         return FilterList[adapterPosition].email.toString()
     }
 
+    fun removeItem(email:String) {
+        val db = FirebaseFirestore.getInstance()
+        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+        val userEmail = email.split("@").toTypedArray()
+        val email = userEmail[0]
+        
+        val docRef = db.collection("users").document(currentUserID)
+
+        // Remove the 'capital' field from the document
+
+        val updates = hashMapOf<String, Any>(
+            email to FieldValue.delete()
+        )
+
+        docRef.update(updates).addOnCompleteListener {
+            notifyDataSetChanged()
+        }
+
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(familiares: Familiares) {
             val textViewNombre = itemView.findViewById<TextView>(R.id.textViewTitulo)
             textViewNombre.text = familiares.email
+
         }
     }
 

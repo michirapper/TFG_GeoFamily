@@ -72,8 +72,11 @@ class ListFragment : Fragment() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val position = viewHolder.adapterPosition
                     val entity = adapter!!.getEntity(viewHolder.adapterPosition)
-                    //adapter!!.removeItem(viewHolder.adapterPosition)
+                    adapter!!.removeItem(entity)
                     Toast.makeText(context, entity, Toast.LENGTH_SHORT).show()
+                    getFragmentManager()?.beginTransaction()?.
+                    detach(this@ListFragment)?.attach(this@ListFragment)
+                        ?.commit();
                 }
 
                 override fun onChildDraw(
