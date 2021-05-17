@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:orientation="horizontal">
+
+
+    <RelativeLayout
+        android:id="@+id/foreground"
+        android:visibility="visible"
+        android:background="#ffffff"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:orientation="vertical"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/textViewTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:maxLines="3"
+                android:text="Best article ever"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="(48.51664,48.19819)"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <TextView
-        android:id="@+id/textViewTitulo"
+        android:layout_marginTop="79dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/amiko_semibold"
-        android:gravity="center"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
-</LinearLayout>
+        android:layout_height="1dp"
+        android:background="#a9a9a9"/>
+</FrameLayout>

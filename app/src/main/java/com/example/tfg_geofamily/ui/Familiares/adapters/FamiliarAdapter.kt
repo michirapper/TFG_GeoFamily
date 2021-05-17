@@ -47,6 +47,10 @@ class FamiliarAdapter(
         return FilterList.size
     }
 
+    fun getEntity(adapterPosition: Int): String {
+        return FilterList[adapterPosition].email.toString()
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(familiares: Familiares) {
