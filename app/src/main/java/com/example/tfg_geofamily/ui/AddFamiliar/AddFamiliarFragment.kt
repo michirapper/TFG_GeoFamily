@@ -36,9 +36,14 @@ class AddFamiliarFragment : Fragment() {
             user[userEmail[0]] = addEmail
 
             database.collection("users").document(userUID!!).update(user).addOnSuccessListener {
+
                 Toast.makeText(context, "Todo ok", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
-                Toast.makeText(context, "fail", Toast.LENGTH_SHORT).show()
+
+                database.collection("users").document(userUID!!)
+                    .set(user)
+                    .addOnSuccessListener { Toast.makeText(context, "Todo ok", Toast.LENGTH_SHORT).show() }
+                    .addOnFailureListener { Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show() }
             }
 
         }

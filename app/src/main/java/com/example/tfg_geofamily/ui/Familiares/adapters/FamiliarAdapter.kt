@@ -59,7 +59,7 @@ class FamiliarAdapter(
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val userEmail = email.split("@").toTypedArray()
         val email = userEmail[0]
-        
+
         val docRef = db.collection("users").document(currentUserID)
 
         // Remove the 'capital' field from the document

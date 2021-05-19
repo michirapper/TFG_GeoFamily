@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
@@ -72,12 +73,9 @@ class RegisterFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             progressDialog.dismiss()
-                            Toast.makeText(
-                                context,
-                                "Account has been created successfully.",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(context,"Account has been created successfully.",Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_registerFragment2_to_drawerActivity)
+                            registrarUsuarioMapa()
                         } else {
                             val messeage = task.exception!!.toString()
                             Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
@@ -88,6 +86,27 @@ class RegisterFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun registrarUsuarioMapa() {
+        var database = FirebaseFirestore.getInstance()
+        var userUID = FirebaseAuth.getInstance().uid
+        var addEmail = binding.email.text.toString()
+        val userEmail = addEmail.split("@").toTypedArray()
+
+        val user: MutableMap<String, Any> = HashMap()
+        user[userEmail[0]] = addEmail
+
+        database.collection("users").document(userUID!!).update(user).addOnSuccessListener {
+
+            Toast.makeText(context, "Todo ok", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+
+            database.collection("users").document(userUID!!)
+                .set(user)
+                .addOnSuccessListener { Toast.makeText(context, "Todo ok", Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show() }
+        }
     }
 
     companion object {
