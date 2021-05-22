@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.tfg_geofamily.databinding.FragmentMapResultBinding
 import com.example.tfg_geofamily.fragments.model.FamiliaresViewModel
 import com.example.tfg_geofamily.pojo.MapsPojo
+import com.example.tfg_geofamily.ui.map.adapters.CustomInfoWindowForGoogleMap
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -94,6 +95,7 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
                 }
 
             })
+        mMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
 
     }
 

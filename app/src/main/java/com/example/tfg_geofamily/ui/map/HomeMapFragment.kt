@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.example.tfg_geofamily.databinding.FragmentHomeMapBinding
 import com.example.tfg_geofamily.pojo.MapsPojo
+import com.example.tfg_geofamily.ui.map.adapters.CustomInfoWindowForGoogleMap
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
@@ -85,9 +86,10 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
                     var longitud: Double = mp!!.longitud
                     var uid: String = mp!!.UID
                     var email: String = mp!!.email
-                    var markerOptions: MarkerOptions = MarkerOptions().title(email).snippet("($latitud - $longitud)").position(
+                    var markerOptions: MarkerOptions = MarkerOptions().title(email).snippet("($latitud , $longitud)").position(
                         LatLng(latitud, longitud)
                     )
+
 
                     val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                     for (person in familyGroup) {
@@ -106,6 +108,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
             }
 
         })
+        mMap.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
     }
 
     private fun firestore() {
