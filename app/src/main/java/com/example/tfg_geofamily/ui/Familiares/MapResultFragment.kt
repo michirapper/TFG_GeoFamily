@@ -70,7 +70,8 @@ class MapResultFragment : Fragment(), OnMapReadyCallback {
                         var longitud: Double = mp!!.longitud
                         var uid: String = mp!!.UID
                         var email: String = mp!!.email
-                        var markerOptions: MarkerOptions = MarkerOptions().title(email).snippet("($latitud , $longitud)").position(
+                        var avatar: String = mp!!.avatar
+                        var markerOptions: MarkerOptions = MarkerOptions().title(email + "#" + avatar).snippet("($latitud , $longitud)").position(
                             LatLng(latitud, longitud)
                         )
                         tmpRealTimeMarkers.add(mMap.addMarker(markerOptions)!!)

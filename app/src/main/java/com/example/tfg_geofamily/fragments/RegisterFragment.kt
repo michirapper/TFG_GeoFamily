@@ -102,7 +102,7 @@ class RegisterFragment : Fragment() {
         val latLang = HashMap<String, Any>()
         latLang["latitud"] = 0.0
         latLang["longitud"] = 0.0
-        latLang["avatar"] = ""
+        latLang["avatar"] = "https://firebasestorage.googleapis.com/v0/b/tfg-geofamily.appspot.com/o/fotos%2Fdefault.png?alt=media&token=4c88e987-e2cc-4d16-9533-e412f495533d"
         latLang["UID"] = currentUserID
         latLang["email"] = currentUserEmail!!
         val userEmail = currentUserEmail.split("@").toTypedArray()

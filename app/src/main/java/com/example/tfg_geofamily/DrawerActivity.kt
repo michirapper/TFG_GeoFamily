@@ -11,6 +11,7 @@ import android.provider.Settings
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.tfg_geofamily.databinding.ActivityDrawerBinding
 import com.example.tfg_geofamily.pojo.MapsPojo
 import com.firebase.ui.auth.AuthUI
@@ -29,6 +32,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.lang.Exception
 
 private const val TAG = "DrawerActivity"
 private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
@@ -68,13 +72,21 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
+        val userEmail = currentUserEmail?.split("@")!!.toTypedArray()
+        var icono = ""
+
+
+
+
+
 
         binding = ActivityDrawerBinding.inflate(layoutInflater)
         setSupportActionBar(binding.appBarDrawer.toolbar)
         setContentView(binding.root)
 
-        mDatabase =
-            FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+
 
         foregroundOnlyBroadcastReceiver = ForegroundOnlyBroadcastReceiver()
 
@@ -105,10 +117,51 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
             it.onNavDestinationSelected(navController)
             true
         }
-        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
         val header = navView.getHeaderView(0)
         val cabecera = header.findViewById<TextView>(R.id.textView)
         cabecera.text = currentUserEmail
+        val iconoHeader = header.findViewById<ImageView>(R.id.imageView)
+
+
+
+        mDatabase.child("usuarios").child(userEmail[0])
+            .addValueEventListener(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    try {
+
+                        var mp = snapshot.getValue(MapsPojo::class.java)
+                        icono = mp!!.avatar
+
+                        var myUri: Uri = Uri.parse(icono)
+                        Log.e("icono", myUri.toString())
+                        Glide.with(this@DrawerActivity)
+                            .asBitmap()
+                            .load(myUri)
+                            .fitCenter()
+                            .centerCrop()
+                            .into(BitmapImageViewTarget(iconoHeader)
+                            )
+
+                    } catch (e: Exception) {
+                        icono = "https://firebasestorage.googleapis.com/v0/b/tfg-geofamily.appspot.com/o/fotos%2Fdefault.png?alt=media&token=4c88e987-e2cc-4d16-9533-e412f495533d"
+                        var myUri: Uri = Uri.parse(icono)
+                        Glide.with(this@DrawerActivity)
+                            .asBitmap()
+                            .load(myUri)
+                            .fitCenter()
+                            .centerCrop()
+                            .into(BitmapImageViewTarget(iconoHeader)
+                            )
+                    }
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
 
         val navController = findNavController(R.id.nav_host_fragment_content_drawer)
 
