@@ -5,4 +5,5 @@ class MapsPojo {
     var longitud = 0.0
     var UID = ""
     var email = ""
+    var avatar = ""
 }

@@ -16,6 +16,9 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.example.tfg_geofamily.databinding.FragmentUploadBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.*
@@ -30,6 +33,7 @@ class UploadFragment : Fragment() {
     lateinit var mImageView: ImageView
     private var GALLERY_INTENT = 1
     private lateinit var mProgressDialog: ProgressDialog
+    lateinit var mDatabase: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +48,8 @@ class UploadFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentUploadBinding.inflate(inflater, container, false)
+
+        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
         mStorage = FirebaseStorage.getInstance().reference
 
@@ -78,8 +84,15 @@ class UploadFragment : Fragment() {
                 var file = filePath.putFile(uri!!).await()
                 delay(3000)
                 if(file.task.isComplete){
+                    val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
                     mProgressDialog.dismiss()
                     descargarFoto = file.storage.downloadUrl.await()
+
+                    val latLang = HashMap<String, Any>()
+                    latLang["avatar"] = descargarFoto.toString()
+
+                    val userEmail = currentUserEmail?.split("@")!!.toTypedArray()
+                    mDatabase.child("usuarios").child(userEmail[0]).updateChildren(latLang)
 
                     Log.e("klk", descargarFoto.toString())
                     Glide.with(this@UploadFragment)

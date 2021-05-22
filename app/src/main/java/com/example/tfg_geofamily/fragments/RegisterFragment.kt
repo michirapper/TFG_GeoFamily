@@ -102,6 +102,7 @@ class RegisterFragment : Fragment() {
         val latLang = HashMap<String, Any>()
         latLang["latitud"] = 0.0
         latLang["longitud"] = 0.0
+        latLang["avatar"] = ""
         latLang["UID"] = currentUserID
         latLang["email"] = currentUserEmail!!
         val userEmail = currentUserEmail.split("@").toTypedArray()
