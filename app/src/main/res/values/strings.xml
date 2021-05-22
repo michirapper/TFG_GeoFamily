@@ -31,4 +31,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="familiares">Familiares</string>
     <string name="a_adir_familiar">Añadir familiar</string>
+    <string name="subir_avatar">Subir avatar</string>
+    <string name="logout">Logout</string>
 </resources>

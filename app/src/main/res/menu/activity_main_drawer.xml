@@ -16,12 +16,17 @@
             android:id="@+id/nav_addFamiliarFragment"
             android:icon="@drawable/ic_baseline_person_add_alt_1_24"
             android:title="@string/a_adir_familiar" />
+        <item
+            android:id="@+id/nav_uploadFragment"
+            android:icon="@drawable/ic_baseline_cloud_upload_24"
+            android:title="@string/subir_avatar"/>
 
-        <item android:title="Logout">
+
+        <item android:title="@string/logout">
             <menu>
                 <item
                     android:id="@+id/nav_mainActivity"
-                    android:title="Logout" />
+                    android:title="@string/logout" />
             </menu>
         </item>
     </group>

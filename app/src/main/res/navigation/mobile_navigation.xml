@@ -34,4 +34,9 @@
         android:name="com.example.tfg_geofamily.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/nav_uploadFragment"
+        android:name="com.example.tfg_geofamily.ui.upload_file.UploadFragment"
+        android:label="Subir avatar"
+        tools:layout="@layout/fragment_upload" />
 </navigation>
