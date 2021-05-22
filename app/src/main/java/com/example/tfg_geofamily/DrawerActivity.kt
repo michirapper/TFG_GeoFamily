@@ -21,12 +21,14 @@ import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.ui.*
 import com.example.tfg_geofamily.databinding.ActivityDrawerBinding
+import com.example.tfg_geofamily.pojo.MapsPojo
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 
 private const val TAG = "DrawerActivity"
 private const val REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE = 34
@@ -273,29 +275,34 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
                 ForegroundOnlyLocationService.EXTRA_LOCATION
             )
 
-            if (FirebaseAuth.getInstance().currentUser != null) {
-                if (location != null) {
-                    // firestore()
-                    val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
-                    val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
-                    Log.e(
-                        "LatLong",
-                        "Latitud:" + location.latitude + " - " + "Longitud:" + location.longitude + " - email: " + currentUserEmail.toString()
-                    )
-                    val latLang = HashMap<String, Any>()
-                    latLang["latitud"] = location.latitude
-                    latLang["longitud"] = location.longitude
-                    latLang["UID"] = currentUserID
-                    latLang["email"] = currentUserEmail!!
-                    val userEmail = currentUserEmail.split("@").toTypedArray()
-                    mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
-                } else {
-                    Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+
+
+
+                if (FirebaseAuth.getInstance().currentUser != null) {
+                    if (location != null) {
+                        // firestore()
+                        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+                        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
+                        Log.e(
+                            "LatLong",
+                            "Latitud:" + location.latitude + " - " + "Longitud:" + location.longitude + " - email: " + currentUserEmail.toString()
+                        )
+
+
+                        val latLang = HashMap<String, Any>()
+                        latLang["latitud"] = location.latitude
+                        latLang["longitud"] = location.longitude
+                        val userEmail = currentUserEmail?.split("@")!!.toTypedArray()
+                        mDatabase.child("usuarios").child(userEmail[0]).updateChildren(latLang)
+                    } else {
+                        Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+
 
         }
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

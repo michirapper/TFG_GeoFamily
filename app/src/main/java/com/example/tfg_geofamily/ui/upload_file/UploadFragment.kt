@@ -80,11 +80,7 @@ class UploadFragment : Fragment() {
                 if(file.task.isComplete){
                     mProgressDialog.dismiss()
                     descargarFoto = file.storage.downloadUrl.await()
-//                    Glide.with(this@UploadFragment)
-//                        .load(descargarFoto)
-//                        .fitCenter()
-//                        .centerCrop()
-//                        .into(mImageView)
+
                     Log.e("klk", descargarFoto.toString())
                     Glide.with(this@UploadFragment)
                         .asBitmap()

@@ -31,8 +31,7 @@ class ForegroundOnlyLocationService : Service() {
     lateinit var mDatabase: DatabaseReference
 
     override fun onCreate() {
-        mDatabase =
-            FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
+        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = LocationRequest.create().apply {
@@ -56,7 +55,6 @@ class ForegroundOnlyLocationService : Service() {
                     if (FirebaseAuth.getInstance().currentUser != null) {
                         if (currentLocation != null) {
                             // firestore()
-                            val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
                             val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
                             Log.e(
                                 "LatLong",
@@ -65,18 +63,13 @@ class ForegroundOnlyLocationService : Service() {
                             val latLang = HashMap<String, Any>()
                             latLang["latitud"] = currentLocation!!.latitude
                             latLang["longitud"] = currentLocation!!.longitude
-                            latLang["UID"] = currentUserID
-                            latLang["email"] = currentUserEmail!!
-                            val userEmail = currentUserEmail.split("@").toTypedArray()
-                            mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
+
+                            val userEmail = currentUserEmail?.split("@")!!.toTypedArray()
+                            mDatabase.child("usuarios").child(userEmail[0]).updateChildren(latLang)
                         }
                     }
 
 
-//                    notificationManager.notify(
-//                        NOTIFICATION_ID,
-//                        generateNotification(currentLocation)
-//                    )
                 }
             }
         }

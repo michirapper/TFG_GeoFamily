@@ -13,10 +13,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.tfg_geofamily.R
 import com.example.tfg_geofamily.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterFragment : Fragment() {
     private lateinit var binding: FragmentRegisterBinding
+    lateinit var mDatabase: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
@@ -25,6 +28,8 @@ class RegisterFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         binding = FragmentRegisterBinding.inflate(inflater, container, false)
+
+        mDatabase = FirebaseDatabase.getInstance("https://tfg-geofamily-default-rtdb.europe-west1.firebasedatabase.app/").reference
 
         binding.login.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment2_to_loginFragment2)
@@ -73,9 +78,11 @@ class RegisterFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             progressDialog.dismiss()
+                            registrarUsuarioMapa()
+                            registrarRTD()
                             Toast.makeText(context,"Account has been created successfully.",Toast.LENGTH_SHORT).show()
                             findNavController().navigate(R.id.action_registerFragment2_to_drawerActivity)
-                            registrarUsuarioMapa()
+
                         } else {
                             val messeage = task.exception!!.toString()
                             Toast.makeText(context, "Error: $messeage", Toast.LENGTH_SHORT).show()
@@ -86,6 +93,19 @@ class RegisterFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun registrarRTD() {
+        val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
+        val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
+
+        val latLang = HashMap<String, Any>()
+        latLang["latitud"] = 0.0
+        latLang["longitud"] = 0.0
+        latLang["UID"] = currentUserID
+        latLang["email"] = currentUserEmail!!
+        val userEmail = currentUserEmail.split("@").toTypedArray()
+        mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
     }
 
     private fun registrarUsuarioMapa() {
