@@ -286,7 +286,7 @@ class DrawerActivity : AppCompatActivity(), SharedPreferences.OnSharedPreference
                     latLang["latitud"] = location.latitude
                     latLang["longitud"] = location.longitude
                     latLang["UID"] = currentUserID
-                    latLang["email"] = currentUserEmail
+                    latLang["email"] = currentUserEmail!!
                     val userEmail = currentUserEmail.split("@").toTypedArray()
                     mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
                 } else {

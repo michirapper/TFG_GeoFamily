@@ -66,7 +66,7 @@ class ForegroundOnlyLocationService : Service() {
                             latLang["latitud"] = currentLocation!!.latitude
                             latLang["longitud"] = currentLocation!!.longitude
                             latLang["UID"] = currentUserID
-                            latLang["email"] = currentUserEmail
+                            latLang["email"] = currentUserEmail!!
                             val userEmail = currentUserEmail.split("@").toTypedArray()
                             mDatabase.child("usuarios").child(userEmail[0]).setValue(latLang)
                         }

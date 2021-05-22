@@ -114,7 +114,7 @@ class HomeMapFragment : Fragment(), OnMapReadyCallback {
     private fun firestore() {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val currentUserEmail = FirebaseAuth.getInstance().currentUser!!.email
-        val userEmail = currentUserEmail.split("@").toTypedArray()
+        val userEmail = currentUserEmail?.split("@")?.toTypedArray()
         val db = FirebaseFirestore.getInstance()
         db.collection("users").get().addOnCompleteListener { task ->
             if (task.isSuccessful) {

@@ -13,7 +13,7 @@
         android:id="@+id/textViewInfoSubir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="97dp"
+        android:layout_marginTop="36dp"
         android:padding="40dp"
         android:text="@string/aqui_podras_subir_la_foto_de_tu_avatar_con_la_que_quieres_que_te_identifiquen_en_el_mapa"
         android:textSize="20sp"
@@ -30,5 +30,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewInfoSubir" />
+
+    <ImageView
+        android:id="@+id/imageViewStorage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="192dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubir"
+        app:layout_constraintVertical_bias="1.0"
+        tools:src="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
